@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <>
+    <header>
       <h1>Shopping Cart</h1>
       <nav>
         <ul>
@@ -14,7 +14,7 @@ const Header = () => {
           </li>
         </ul>
       </nav>
-    </>
+    </header>
   );
 };
 
