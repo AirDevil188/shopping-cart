@@ -26,7 +26,10 @@ const ProductSection = () => {
         const data = await getRequestFetch(
           "https://fakestoreapi.com/products?limit=5"
         );
-        setData(data);
+        const productWithQuantity = data.map((item) => {
+          return { ...item, quantity: 0 };
+        });
+        setData(productWithQuantity);
         setError(null);
       } catch (err) {
         setError(err.message);
@@ -37,11 +40,42 @@ const ProductSection = () => {
     fetchProducts();
   }, []);
 
+  const handleAddToCart = () => {};
+
+  function handleClickIncrement(e) {
+    const id = Number(e.target.id);
+
+    const products = data.map((item) => {
+      if (id === item.id) {
+        return { ...item, quantity: item.quantity + 1 };
+      } else return item;
+    });
+    setData(products);
+  }
+
+  function handleClickDecrement(e) {
+    const id = Number(e.target.id);
+
+    const products = data.map((item) => {
+      if (id === item.id && item.quantity !== 0) {
+        return { ...item, quantity: item.quantity - 1 };
+      } else return item;
+    });
+    setData(products);
+  }
+
   return (
     <>
       {loading && <p>Loading posts...</p>}
       {error && <p>{error}</p>}
-      {data && <Products data={data} />}
+      {data && (
+        <Products
+          data={data}
+          handleAddToCart={handleAddToCart}
+          handleIncrement={handleClickIncrement}
+          handleDecrement={handleClickDecrement}
+        />
+      )}
     </>
   );
 };
