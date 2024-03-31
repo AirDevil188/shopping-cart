@@ -4,7 +4,6 @@ import Shop from "../components/Shop";
 import Cart from "../components/Cart";
 import ErrorPage from "./ErrorPage";
 import HomePage from "../components/Home";
-
 const Router = () => {
   const router = createBrowserRouter([
     {
@@ -23,6 +22,10 @@ const Router = () => {
       ],
     },
   ]);
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />;
+    </>
+  );
 };
 export default Router;
