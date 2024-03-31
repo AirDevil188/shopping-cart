@@ -23,6 +23,7 @@ const Products = ({
             className="btn-add-to-cart"
             onClick={handleAddToCart}
             id={item.id}
+            value={item.quantity}
           >
             Add To Cart
           </button>
