@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Products from "./Products";
 import { getRequestFetch } from "../helper/fetchData";
+import { useOutletContext } from "react-router-dom";
 
 const Shop = () => {
   return (
@@ -16,9 +17,10 @@ const Shop = () => {
 };
 
 const ProductSection = () => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [cart, setCart] = useOutletContext();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -27,7 +29,7 @@ const ProductSection = () => {
           "https://fakestoreapi.com/products?limit=5"
         );
         const productWithQuantity = data.map((item) => {
-          return { ...item, quantity: 0 };
+          return { ...item, quantity: 1 };
         });
         setData(productWithQuantity);
         setError(null);
@@ -40,7 +42,21 @@ const ProductSection = () => {
     fetchProducts();
   }, []);
 
-  const handleAddToCart = () => {};
+  function handleAddToCart(e) {
+    const id = Number(e.target.id);
+    const findSelectedElement = data.find((item) => item.id === id);
+
+    if (cart.length === 0) {
+      setCart([findSelectedElement]);
+    } else {
+      const cartProducts = cart.map((item) => {
+        if (id === item.id) {
+          return { ...item, quantity: item.quantity + Number(e.target.value) };
+        } else return findSelectedElement;
+      });
+      setCart(cartProducts);
+    }
+  }
 
   function handleClickIncrement(e) {
     const id = Number(e.target.id);
