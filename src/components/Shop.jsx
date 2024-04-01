@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Products from "./Products";
 import { getRequestFetch } from "../helper/fetchData";
-import { useOutletContext } from "react-router-dom";
 
 const Shop = () => {
   return (
@@ -20,7 +19,6 @@ const ProductSection = () => {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [cart, setCart] = useOutletContext();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -41,23 +39,6 @@ const ProductSection = () => {
     };
     fetchProducts();
   }, []);
-
-  function handleAddToCart(e) {
-    const id = Number(e.target.id);
-    const productQuantity = Number(e.target.value);
-    const findSelectedElement = data.find((item) => item.id === id);
-
-    if (cart.length === 0) {
-      setCart([findSelectedElement]);
-    } else {
-      const cartProducts = cart.map((item) => {
-        if (id === item.id) {
-          return { ...item, quantity: item.quantity + productQuantity };
-        } else return findSelectedElement;
-      });
-      setCart(cartProducts);
-    }
-  }
 
   function handleClickIncrement(e) {
     const id = Number(e.target.id);
@@ -88,9 +69,8 @@ const ProductSection = () => {
       {data && (
         <Products
           data={data}
-          handleAddToCart={handleAddToCart}
-          handleIncrement={handleClickIncrement}
           handleDecrement={handleClickDecrement}
+          handleIncrement={handleClickIncrement}
         />
       )}
     </>
