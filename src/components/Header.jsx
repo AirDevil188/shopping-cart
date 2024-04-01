@@ -23,4 +23,7 @@ const Header = ({ cart }) => {
   );
 };
 
+Header.propTypes = {
+  cart: PropTypes.number.isRequired,
+};
 export default Header;
