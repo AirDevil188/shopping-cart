@@ -2,7 +2,6 @@ import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const Header = ({ cart }) => {
-  // const [cart, setCart] = useOutletContext();
   return (
     <header>
       <h1>Shopping Cart</h1>
