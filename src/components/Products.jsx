@@ -36,18 +36,20 @@ const Products = ({ data, handleIncrement, handleDecrement }) => {
 
   function clickToAddToCart(e) {
     const id = Number(e.target.id);
-    const productQuantity = Number(e.target.value);
+    const itemQuantity = Number(e.target.value);
     const findSelectedElement = data.find((item) => item.id === id);
+    const cartItem = cart.find((item) => item.id === id);
 
-    if (cart.length === 0) {
-      setCart([findSelectedElement]);
+    if (!cartItem) {
+      setCart((prevState) => [...prevState, findSelectedElement]);
     } else {
-      const cartProducts = cart.map((item) => {
-        if (id === item.id) {
-          return { ...item, quantity: item.quantity + productQuantity };
-        } else return findSelectedElement;
-      });
-      setCart(cartProducts);
+      setCart(
+        cart.map((item) =>
+          item.id === id
+            ? { ...item, quantity: item.quantity + itemQuantity }
+            : item
+        )
+      );
     }
   }
 
