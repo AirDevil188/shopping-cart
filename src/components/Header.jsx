@@ -1,6 +1,7 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useOutletContext } from "react-router-dom";
 
-const Header = () => {
+const Header = ({ cart }) => {
+  // const [cart, setCart] = useOutletContext();
   return (
     <header>
       <h1>Shopping Cart</h1>
@@ -13,7 +14,7 @@ const Header = () => {
             <NavLink to={"/shop"}>Shop</NavLink>
           </li>
           <li>
-            <NavLink to={"/shopping-cart"}>Cart</NavLink>
+            <NavLink to={"/shopping-cart"}> Cart ({cart})</NavLink>
           </li>
         </ul>
       </nav>

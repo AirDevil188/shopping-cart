@@ -44,6 +44,7 @@ const ProductSection = () => {
 
   function handleAddToCart(e) {
     const id = Number(e.target.id);
+    const productQuantity = Number(e.target.value);
     const findSelectedElement = data.find((item) => item.id === id);
 
     if (cart.length === 0) {
@@ -51,7 +52,7 @@ const ProductSection = () => {
     } else {
       const cartProducts = cart.map((item) => {
         if (id === item.id) {
-          return { ...item, quantity: item.quantity + Number(e.target.value) };
+          return { ...item, quantity: item.quantity + productQuantity };
         } else return findSelectedElement;
       });
       setCart(cartProducts);
@@ -73,7 +74,7 @@ const ProductSection = () => {
     const id = Number(e.target.id);
 
     const products = data.map((item) => {
-      if (id === item.id && item.quantity !== 0) {
+      if (id === item.id && item.quantity !== 1) {
         return { ...item, quantity: item.quantity - 1 };
       } else return item;
     });

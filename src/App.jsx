@@ -7,7 +7,7 @@ const App = () => {
   const [cart, setCart] = useState([]);
   return (
     <>
-      <Header />
+      <Header cart={cart.length} />
       <Footer />
       <Outlet context={[cart, setCart]} />
     </>
