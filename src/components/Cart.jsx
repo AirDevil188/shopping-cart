@@ -15,7 +15,7 @@ const Cart = () => {
         return { ...item, quantity: item.quantity + 1 };
       } else return item;
     });
-    setCart(products);
+    setCart(() => products);
   }
 
   function handleClickDecrement(e) {
@@ -26,7 +26,7 @@ const Cart = () => {
         return { ...item, quantity: item.quantity - 1 };
       } else return item;
     });
-    setCart(products);
+    setCart(() => products);
   }
 
   return (
