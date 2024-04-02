@@ -3,7 +3,7 @@ import Products from "./Products";
 
 const Cart = () => {
   const [cart, setCart] = useOutletContext();
-  let subtotal = cart.reduce((previousValue, currentValue) => {
+  const subtotal = cart.reduce((previousValue, currentValue) => {
     return previousValue + currentValue.quantity * currentValue.price;
   }, 0);
 
