@@ -3,6 +3,9 @@ import Products from "./Products";
 
 const Cart = () => {
   const [cart, setCart] = useOutletContext();
+  let subtotal = cart.reduce((previousValue, currentValue) => {
+    return previousValue + currentValue.quantity * currentValue.price;
+  }, 0);
 
   function handleClickIncrement(e) {
     const id = Number(e.target.id);
@@ -23,7 +26,7 @@ const Cart = () => {
         return { ...item, quantity: item.quantity - 1 };
       } else return item;
     });
-    setCart(...products);
+    setCart(products);
   }
 
   return (
@@ -41,7 +44,7 @@ const Cart = () => {
           )}
         </div>
         <div className="subtotal-container">
-          <h3>Subtotal: </h3>
+          <h4>{subtotal.toFixed(2)}</h4>
           <button className="checkout-button">Checkout</button>
         </div>
       </div>
