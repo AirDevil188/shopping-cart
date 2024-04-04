@@ -15,12 +15,7 @@ const Products = ({ data, handleIncrement, handleDecrement }) => {
         </picture>
         <h4 className="data-name">{data.title}</h4>
         {location.pathname === "/shop" && (
-          <ShopProducts
-            data={data}
-            handleAddToCart={clickToAddToCart}
-            handleDecrement={handleDecrement}
-            handleIncrement={handleIncrement}
-          />
+          <ShopProducts data={data} handleAddToCart={clickToAddToCart} />
         )}
         {location.pathname === "/shopping-cart" && (
           <CartProducts
@@ -60,19 +55,13 @@ const Products = ({ data, handleIncrement, handleDecrement }) => {
   }
 };
 
-const ShopProducts = ({
-  data,
-  handleIncrement,
-  handleDecrement,
-  handleAddToCart,
-}) => {
+const ShopProducts = ({ data, handleAddToCart }) => {
   return (
     <>
-      <figcaption className="data-caption">{data.description}</figcaption>
+      <div className="price-container">
+        <output>{data.price}</output>
+      </div>
       <div className="button-container">
-        <CiCircleMinus onClick={handleDecrement} id={data.id} />
-        <output>{data.quantity}</output>
-        <CiCirclePlus onClick={handleIncrement} id={data.id} />
         <button
           className="btn-add-to-cart"
           onClick={handleAddToCart}
@@ -113,8 +102,6 @@ const CartProducts = ({
 ShopProducts.propTypes = {
   data: PropTypes.object.isRequired,
   handleAddToCart: PropTypes.func.isRequired,
-  handleIncrement: PropTypes.func.isRequired,
-  handleDecrement: PropTypes.func.isRequired,
 };
 
 CartProducts.propTypes = {
