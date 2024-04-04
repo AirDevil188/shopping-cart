@@ -1,6 +1,6 @@
 import { CiCirclePlus } from "react-icons/ci";
 import { CiCircleMinus } from "react-icons/ci";
-import { useLocation, useOutletContext } from "react-router-dom";
+import { Link, useLocation, useOutletContext } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const Products = ({ data, handleIncrement, handleDecrement }) => {
@@ -10,12 +10,14 @@ const Products = ({ data, handleIncrement, handleDecrement }) => {
   return data.map((data) => {
     return (
       <figure id={data.id} key={data.id}>
-        <picture>
-          <img src={data.image} alt="" />
-        </picture>
-        <h4 className="data-name">{data.title}</h4>
+        <Link state={data} to={`/shop/products/${String(data.id)}`}>
+          <picture>
+            <img src={data.image} alt="" />
+          </picture>
+          <h4 className="data-name">{data.title}</h4>
+        </Link>
         {location.pathname === "/shop" && (
-          <ShopProducts data={data} handleAddToCart={clickToAddToCart} />
+          <ShopProducts data={data} handleAddToCart={handleAddToCart} />
         )}
         {location.pathname === "/shopping-cart" && (
           <CartProducts
@@ -29,9 +31,8 @@ const Products = ({ data, handleIncrement, handleDecrement }) => {
     );
   });
 
-  function clickToAddToCart(e) {
+  function handleAddToCart(e) {
     const id = Number(e.target.id);
-    const itemQuantity = Number(e.target.value);
     const findSelectedElement = data.find((item) => item.id === id);
     const cartItem = cart.find((item) => item.id === id);
 
@@ -40,9 +41,7 @@ const Products = ({ data, handleIncrement, handleDecrement }) => {
     } else {
       setCart(
         cart.map((item) =>
-          item.id === id
-            ? { ...item, quantity: item.quantity + itemQuantity }
-            : item
+          item.id === id ? { ...item, quantity: item.quantity + 1 } : item
         )
       );
     }
