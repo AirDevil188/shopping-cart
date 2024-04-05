@@ -44,7 +44,7 @@ const Cart = () => {
           )}
         </div>
         <div className="subtotal-container">
-          <h4>{subtotal.toFixed(2)}</h4>
+          <h4>${subtotal.toFixed(2)}</h4>
           <button className="checkout-button">Checkout</button>
         </div>
       </div>

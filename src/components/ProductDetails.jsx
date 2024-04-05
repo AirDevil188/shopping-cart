@@ -5,12 +5,10 @@ const ProductDetails = () => {
   const { state } = useLocation();
   const [cart, setCart] = useOutletContext();
   const [value, setValue] = useState(1);
-  console.log(typeof value);
 
   function handleAddToCart(e) {
     const id = Number(e.target.id);
     const cartItem = cart.find((item) => item.id === id);
-    console.log(cartItem);
 
     if (!cartItem) {
       const newObj = Object.assign({}, state);

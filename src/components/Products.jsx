@@ -58,7 +58,7 @@ const ShopProducts = ({ data, handleAddToCart }) => {
   return (
     <>
       <div className="price-container">
-        <output>{data.price}</output>
+        <output>${data.price}</output>
       </div>
       <div className="button-container">
         <button
@@ -80,6 +80,7 @@ const CartProducts = ({
   handleDecrement,
   handleDelete,
 }) => {
+  const price = data.price * data.quantity;
   return (
     <>
       <div className="button-container">
@@ -87,8 +88,7 @@ const CartProducts = ({
         <output>{data.quantity}</output>
         <CiCirclePlus onClick={handleIncrement} id={data.id} />
         <div className="price-container">
-          <output>Quantity: {data.quantity}</output>
-          <output>Price: {data.price * data.quantity}</output>
+          <output>Price: ${price.toFixed(2)}</output>
         </div>
         <button className="delete-button" id={data.id} onClick={handleDelete}>
           DELETE
