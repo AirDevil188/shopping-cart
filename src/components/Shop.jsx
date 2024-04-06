@@ -40,39 +40,11 @@ const ProductSection = () => {
     fetchProducts();
   }, []);
 
-  function handleClickIncrement(e) {
-    const id = Number(e.target.id);
-
-    const products = data.map((item) => {
-      if (id === item.id) {
-        return { ...item, quantity: item.quantity + 1 };
-      } else return item;
-    });
-    setData(products);
-  }
-
-  function handleClickDecrement(e) {
-    const id = Number(e.target.id);
-
-    const products = data.map((item) => {
-      if (id === item.id && item.quantity !== 1) {
-        return { ...item, quantity: item.quantity - 1 };
-      } else return item;
-    });
-    setData(products);
-  }
-
   return (
     <>
       {loading && <p>Loading posts...</p>}
       {error && <p>{error}</p>}
-      {data && (
-        <Products
-          data={data}
-          handleDecrement={handleClickDecrement}
-          handleIncrement={handleClickIncrement}
-        />
-      )}
+      {data && <Products data={data} />}
     </>
   );
 };
