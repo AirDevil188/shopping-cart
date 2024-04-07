@@ -7,9 +7,9 @@ const Shop = () => {
     <section id="shop-section">
       <div className="hero-text-container">
         <h2>Check out our awesome new items!</h2>
-        <div className="items-container">
-          <ProductSection />
-        </div>
+      </div>
+      <div className="items-container">
+        <ProductSection />
       </div>
     </section>
   );
@@ -26,6 +26,7 @@ const ProductSection = () => {
         const data = await getRequestFetch(
           "https://fakestoreapi.com/products?limit=5"
         );
+        console.log(data);
         const productWithQuantity = data.map((item) => {
           return { ...item, quantity: 1 };
         });
