@@ -77,7 +77,10 @@ it("Should update cart number on the NavLink if the add to cart button is clicke
   const cartLink = screen.getByRole("link", { name: "Cart (0)" });
   expect(cartLink).toHaveTextContent("Cart (0)");
   await user.click(addToCartButton[0]);
+
   expect(cartLink).toHaveTextContent("Cart (1)");
+  await user.click(addToCartButton[1]);
+  expect(cartLink).toHaveTextContent("Cart (2)");
 });
 
 it("Should not update Cart number on NavLink if the same product is added", async () => {
@@ -85,8 +88,8 @@ it("Should not update Cart number on NavLink if the same product is added", asyn
   const addToCartButton = await screen.findAllByRole("button", {
     name: "Add To Cart",
   });
-  const cartLink = screen.getByRole("link", { name: "Cart (1)" });
-  expect(cartLink).toHaveTextContent("Cart (1)");
+  const cartLink = screen.getByRole("link", { name: "Cart (2)" });
+  expect(cartLink).toHaveTextContent("Cart (2)");
   await user.click(addToCartButton[0]);
-  expect(cartLink).toHaveTextContent("Cart (1)");
+  expect(cartLink).toHaveTextContent("Cart (2)");
 });
