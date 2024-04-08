@@ -1,6 +1,7 @@
 import { expect, it } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider, createMemoryRouter } from "react-router-dom";
+import userEvent from "@testing-library/user-event";
 import App from "../App";
 import ErrorPage from "../routes/ErrorPage";
 import HomePage from "../components/Home";
@@ -65,4 +66,27 @@ it("Checks if every product item has been rendered and has title, picture, price
     expect(price).toHaveLength(totalProducts);
     expect(buttons).toHaveLength(totalProducts);
   });
+});
+
+it("Should update cart number on the NavLink if the add to cart button is clicked", async () => {
+  const user = userEvent.setup();
+
+  const addToCartButton = await screen.findAllByRole("button", {
+    name: "Add To Cart",
+  });
+  const cartLink = screen.getByRole("link", { name: "Cart (0)" });
+  expect(cartLink).toHaveTextContent("Cart (0)");
+  await user.click(addToCartButton[0]);
+  expect(cartLink).toHaveTextContent("Cart (1)");
+});
+
+it("Should not update Cart number on NavLink if the same product is added", async () => {
+  const user = userEvent.setup();
+  const addToCartButton = await screen.findAllByRole("button", {
+    name: "Add To Cart",
+  });
+  const cartLink = screen.getByRole("link", { name: "Cart (1)" });
+  expect(cartLink).toHaveTextContent("Cart (1)");
+  await user.click(addToCartButton[0]);
+  expect(cartLink).toHaveTextContent("Cart (1)");
 });
