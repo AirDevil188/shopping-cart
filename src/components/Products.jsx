@@ -84,9 +84,13 @@ const CartProducts = ({
   return (
     <>
       <div className="button-container">
-        <CiCircleMinus onClick={handleDecrement} id={data.id} />
-        <output>{data.quantity}</output>
-        <CiCirclePlus onClick={handleIncrement} id={data.id} />
+        <button id={data.id} onClick={handleDecrement}>
+          -
+        </button>
+        <output title="quantity">{data.quantity}</output>
+        <button id={data.id} onClick={handleIncrement}>
+          +
+        </button>
         <div className="price-container">
           <output>Price: ${price.toFixed(2)}</output>
         </div>
