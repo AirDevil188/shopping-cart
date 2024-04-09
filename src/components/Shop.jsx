@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import Products from "./Products";
+import PropTypes from "prop-types";
 import { getRequestFetch } from "../helper/fetchData";
+import ShopProducts from "./ShopProducts";
+import { useOutletContext } from "react-router-dom";
 
 const Shop = () => {
   return (
@@ -16,9 +18,26 @@ const Shop = () => {
 };
 
 const ProductSection = () => {
+  const [cart, setCart] = useOutletContext();
   const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  function handleAddToCart(e) {
+    const id = Number(e.target.id);
+    const findSelectedElement = data.find((item) => item.id === id);
+    const cartItem = cart.find((item) => item.id === id);
+
+    if (!cartItem) {
+      setCart((prevState) => [...prevState, findSelectedElement]);
+    } else {
+      setCart(
+        cart.map((item) =>
+          item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+        )
+      );
+    }
+  }
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -30,6 +49,7 @@ const ProductSection = () => {
           return { ...item, quantity: 1 };
         });
         setData(productWithQuantity);
+        console.log(productWithQuantity);
         setError(null);
       } catch (err) {
         setError(err.message);
@@ -44,9 +64,19 @@ const ProductSection = () => {
     <>
       {loading && <p>Loading posts...</p>}
       {error && <p>{error}</p>}
-      {data && <Products data={data} />}
+      {data && (
+        <ShopProducts
+          data={data}
+          handleAddToCart={handleAddToCart}
+        ></ShopProducts>
+      )}
     </>
   );
+};
+
+ShopProducts.propTypes = {
+  data: PropTypes.array.isRequired,
+  handleAddToCart: PropTypes.func.isRequired,
 };
 
 export default Shop;

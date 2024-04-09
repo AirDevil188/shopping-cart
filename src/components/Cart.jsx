@@ -1,5 +1,6 @@
 import { useOutletContext } from "react-router-dom";
-import Products from "./Products";
+import CartProducts from "./CartProducts";
+import PropTypes from "prop-types";
 
 const Cart = () => {
   const [cart, setCart] = useOutletContext();
@@ -29,6 +30,12 @@ const Cart = () => {
     setCart(() => products);
   }
 
+  function handleDelete(e) {
+    const id = Number(e.target.id);
+    const deleteItem = cart.filter((item) => item.id !== id);
+    setCart(deleteItem);
+  }
+
   return (
     <section id="shopping-cart-section">
       <div>
@@ -36,10 +43,11 @@ const Cart = () => {
         <div className="shopping-cart-items">
           {cart.length === 0 && <h3>Cart is empty</h3>}
           {cart.length !== 0 && (
-            <Products
+            <CartProducts
               data={cart}
-              handleIncrement={handleClickIncrement}
               handleDecrement={handleClickDecrement}
+              handleIncrement={handleClickIncrement}
+              handleDelete={handleDelete}
             />
           )}
         </div>
@@ -50,6 +58,13 @@ const Cart = () => {
       </div>
     </section>
   );
+};
+
+CartProducts.propTypes = {
+  data: PropTypes.array.isRequired,
+  handleIncrement: PropTypes.func.isRequired,
+  handleDecrement: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired,
 };
 
 export default Cart;
