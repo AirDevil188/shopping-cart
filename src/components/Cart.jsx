@@ -34,7 +34,7 @@ const Cart = () => {
       <div>
         <h2>Your Cart: {cart.length}</h2>
         <div className="shopping-cart-items">
-          {cart.length === 0 && <p>Cart is empty...</p>}
+          {cart.length === 0 && <h3>Cart is empty</h3>}
           {cart.length !== 0 && (
             <Products
               data={cart}
@@ -44,7 +44,7 @@ const Cart = () => {
           )}
         </div>
         <div className="subtotal-container">
-          <h4>${subtotal.toFixed(2)}</h4>
+          <h3>${subtotal.toFixed(2)}</h3>
           <button className="checkout-button">Checkout</button>
         </div>
       </div>
