@@ -1,5 +1,5 @@
 import { RouterProvider, createMemoryRouter } from "react-router-dom";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { expect, it } from "vitest";
 import HomePage from "../components/Home";
 import App from "../App";
