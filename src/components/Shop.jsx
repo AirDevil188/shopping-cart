@@ -26,7 +26,6 @@ const ProductSection = () => {
         const data = await getRequestFetch(
           "https://fakestoreapi.com/products?limit=5"
         );
-        console.log(data);
         const productWithQuantity = data.map((item) => {
           return { ...item, quantity: 1 };
         });
