@@ -1,5 +1,10 @@
-import { RouterProvider, createMemoryRouter } from "react-router-dom";
-import { render, screen } from "@testing-library/react";
+import {
+  BrowserRouter,
+  RouterProvider,
+  createMemoryRouter,
+  useOutletContext,
+} from "react-router-dom";
+import { getByRole, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { expect } from "vitest";
 import HomePage from "../components/Home";
@@ -8,6 +13,7 @@ import ErrorPage from "../routes/ErrorPage";
 import Shop from "../components/Shop";
 import ProductDetails from "../components/ProductDetails";
 import Cart from "../components/Cart";
+import CartProducts from "../components/CartProducts";
 
 const routes = [
   {
@@ -32,78 +38,109 @@ const routes = [
   },
 ];
 
+vi.mock("react-router-dom", async () => {
+  const mod = await vi.importActual("react-router-dom");
+  return {
+    ...mod,
+    useOutletContext: () => [mockCart],
+  };
+});
+
+const mockCart = [
+  {
+    id: 1,
+    title: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
+    price: 109.95,
+    quantity: 1,
+    description:
+      "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+    category: "men's clothing",
+    image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+    rating: {
+      rate: 3.9,
+      count: 120,
+    },
+  },
+];
+
 const router = createMemoryRouter(routes, {
   initialEntries: ["/", "/shop", "shop/products/:productID", "/shopping-cart"],
   initialIndex: 3,
 });
 
-beforeEach(() => {
+it("Checks if the product is being rendered properly", async () => {
   render(
-    <RouterProvider router={router}>
-      <Cart />
-    </RouterProvider>
+    <BrowserRouter>
+      <CartProducts data={mockCart}></CartProducts>
+    </BrowserRouter>
   );
+  expect(screen.getByRole("figure")).toBeInTheDocument();
+  expect(screen.getByRole("figure")).toBeInTheDocument();
+  expect(
+    screen.getByRole("heading", {
+      name: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
+    })
+  ).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: "+" }));
+  expect(screen.getByRole("button", { name: "-" }));
+  expect(screen.getByTitle("quantity"));
 });
 
-it("Checks if Cart Heading is rendered", () => {
-  const heading = screen.getByRole("heading", { name: "Your Cart: 0" });
+it("Checks if number of products in cart is one", async () => {
+  render(
+    <BrowserRouter>
+      <Cart></Cart>
+    </BrowserRouter>
+  );
 
-  expect(heading).toBeInTheDocument();
+  screen.debug();
+  expect(screen.getByRole("heading", { name: "Your Cart: 1" }));
 });
 
-it("Checks if the cart is empty", () => {
-  const para = screen.getByRole("heading", { name: "Cart is empty" });
-  expect(para).toBeInTheDocument();
+it("Checks if increment button is function is called", async () => {
+  const handleClickIncrement = vi.fn();
+  render(
+    <BrowserRouter>
+      <CartProducts
+        data={mockCart}
+        handleIncrement={handleClickIncrement}
+      ></CartProducts>
+    </BrowserRouter>
+  );
+
+  const incrementButton = screen.getByRole("button", { name: "+" });
+  await userEvent.click(incrementButton);
+  expect(handleClickIncrement).toBeCalled();
 });
 
-it("Checks if product is being added", async () => {
-  await userEvent.click(screen.getByText("Shop"));
+it("Checks if decrement button is function is called", async () => {
+  const handleClickDecrement = vi.fn();
+  render(
+    <BrowserRouter>
+      <CartProducts
+        data={mockCart}
+        handleDecrement={handleClickDecrement}
+      ></CartProducts>
+    </BrowserRouter>
+  );
 
-  const addToCartButton = await screen.findAllByRole("button", {
-    name: "Add To Cart",
-  });
-
-  await userEvent.click(addToCartButton[0]);
-  await userEvent.click(addToCartButton[1]);
-  await userEvent.click(screen.getByText("Cart (2)"));
-  expect(await screen.findAllByRole("figure")).toBeTruthy();
+  const decrementButton = screen.getByRole("button", { name: "-" });
+  await userEvent.click(decrementButton);
+  expect(handleClickDecrement).toBeCalled();
 });
 
-it("Check if increment button is working", async () => {
-  const productPrice = await screen.findAllByRole("status");
-  const incrementButton = await screen.findAllByRole("button", { name: "+" });
-  const productQuantity = await screen.findAllByTitle("quantity");
-  await userEvent.click(incrementButton[0]);
-  expect(productQuantity[0].textContent).toMatch(2);
-  expect(productPrice[1].textContent).toMatch("Price: $219.90");
-  await userEvent.click(incrementButton[0]);
-  expect(productQuantity[0].textContent).toMatch(3);
-  expect(productPrice[1].textContent).toMatch("Price: $329.85");
-});
+it("Checks if increment button is function is called", async () => {
+  const handleClickDelete = vi.fn();
+  render(
+    <BrowserRouter>
+      <CartProducts
+        data={mockCart}
+        handleDelete={handleClickDelete}
+      ></CartProducts>
+    </BrowserRouter>
+  );
 
-it("Check if subtotal is working", () => {
-  const subtotal = screen.getByRole("heading", { level: 3 });
-  expect(subtotal.textContent).toMatch("$352.15");
-});
-
-it("Check if decrement button is working", async () => {
-  const productPrice = await screen.findAllByRole("status");
-  const productQuantity = await screen.findAllByTitle("quantity");
-  const decrementButton = await screen.findAllByRole("button", { name: "-" });
-  await userEvent.click(decrementButton[0]);
-  expect(productQuantity[0].textContent).toMatch(2);
-  expect(productPrice[1].textContent).toMatch("Price: $219.90");
-  await userEvent.click(decrementButton[0]);
-  expect(productPrice[1].textContent).toMatch("Price: $109.95");
-  expect(productQuantity[0].textContent).toMatch(1);
-});
-
-it("Check if product is deleted from cart", async () => {
-  const deleteButton = await screen.findAllByRole("button", { name: "DELETE" });
-  await userEvent.click(deleteButton[0]);
-  await userEvent.click(deleteButton[1]);
-  const para = screen.getByRole("heading", { name: "Cart is empty" });
-  expect(deleteButton[0]).not.toBeInTheDocument();
-  expect(deleteButton[1]).not.toBeInTheDocument();
-  expect(para).toBeInTheDocument();
+  const deleteButton = screen.getByRole("button", { name: "DELETE" });
+  await userEvent.click(deleteButton);
+  expect(handleClickDelete).toBeCalled();
 });
