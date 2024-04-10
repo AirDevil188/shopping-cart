@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { getRequestFetch } from "./fetchData";
 
 const getData = (url) => {
-  console.log(url);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -18,7 +17,6 @@ const getData = (url) => {
             })
           );
         } else {
-          console.log("one");
           setData(() => [{ ...data, quantity: 1 }]);
         }
         setError(null);

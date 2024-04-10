@@ -2,36 +2,8 @@ import { BrowserRouter, createMemoryRouter } from "react-router-dom";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { expect } from "vitest";
-import HomePage from "../components/Home";
-import App from "../App";
-import ErrorPage from "../routes/ErrorPage";
-import Shop from "../components/Shop";
-import ProductDetails from "../components/ProductDetails";
 import Cart from "../components/Cart";
 import CartProducts from "../components/CartProducts";
-
-const routes = [
-  {
-    element: <App />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        path: "/",
-        element: <HomePage />,
-      },
-      {
-        path: "/shop",
-        element: <Shop />,
-      },
-
-      {
-        path: "shop/products/:productID",
-        element: <ProductDetails />,
-      },
-      { path: "/shopping-cart", element: <Cart /> },
-    ],
-  },
-];
 
 vi.mock("react-router-dom", async () => {
   const mod = await vi.importActual("react-router-dom");
@@ -57,11 +29,6 @@ const mockCart = [
     },
   },
 ];
-
-const router = createMemoryRouter(routes, {
-  initialEntries: ["/", "/shop", "shop/products/:productID", "/shopping-cart"],
-  initialIndex: 3,
-});
 
 it("Checks if the product is being rendered properly", async () => {
   render(

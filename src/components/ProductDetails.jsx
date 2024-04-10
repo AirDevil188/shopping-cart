@@ -1,16 +1,14 @@
 import { useState } from "react";
-import { useLocation, useOutletContext, useParams } from "react-router-dom";
+import { useOutletContext, useParams } from "react-router-dom";
 import getData from "../helper/getData";
 import ErrorPage from "../routes/ErrorPage";
 
 const ProductDetails = () => {
-  const { state } = useLocation();
   const { productID } = useParams();
   const { data, loading, error } = getData(`/products/${productID}`);
 
   const [cart, setCart] = useOutletContext();
   const [value, setValue] = useState(1);
-  console.log(data);
 
   function handleAddToCart(e) {
     const id = Number(e.target.id);
@@ -31,8 +29,8 @@ const ProductDetails = () => {
 
   return (
     <>
-      {loading && <p>Loading posts...</p>}
-      {error && <p>{<ErrorPage />}</p>}
+      {loading && <h3>Loading posts...</h3>}
+      {error && <ErrorPage error={error} />}
       {data &&
         data.map((data) => {
           return (
@@ -47,7 +45,7 @@ const ProductDetails = () => {
                   </picture>
                 </div>
                 <div className="product-description">
-                  <p>{data.description}</p>
+                  <p title="prod-desc">{data.description}</p>
                 </div>
                 <div className="price-container">
                   <output>{data.price}</output>

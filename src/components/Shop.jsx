@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import ShopProducts from "./ShopProducts";
 import { useOutletContext } from "react-router-dom";
 import getData from "../helper/getData";
+import ErrorPage from "../routes/ErrorPage";
 
 const Shop = () => {
   return (
@@ -37,8 +38,8 @@ const ProductSection = () => {
   }
   return (
     <>
-      {loading && <p>Loading posts...</p>}
-      {error && <p>{error}</p>}
+      {loading && <h3>Loading posts...</h3>}
+      {error && <ErrorPage error={error} />}
       {data && (
         <ShopProducts
           data={data}
