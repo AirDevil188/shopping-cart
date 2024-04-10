@@ -4,7 +4,11 @@ const ShopProducts = ({ data, handleAddToCart }) => {
   return data.map((data) => {
     return (
       <figure id={data.id} key={data.id}>
-        <Link state={data} to={`/shop/products/${String(data.id)}`}>
+        <Link
+          state={data}
+          to={`/shop/products/${String(data.id)}`}
+          title="prod-link"
+        >
           <picture>
             <img src={data.image} alt="" />
           </picture>
