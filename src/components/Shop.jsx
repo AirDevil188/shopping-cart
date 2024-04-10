@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { getRequestFetch } from "../helper/fetchData";
 import ShopProducts from "./ShopProducts";
 import { useOutletContext } from "react-router-dom";
+import getData from "../helper/getData";
 
 const Shop = () => {
   return (
@@ -19,9 +18,7 @@ const Shop = () => {
 
 const ProductSection = () => {
   const [cart, setCart] = useOutletContext();
-  const [data, setData] = useState();
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { data, loading, error } = getData("/products");
 
   function handleAddToCart(e) {
     const id = Number(e.target.id);
@@ -38,28 +35,6 @@ const ProductSection = () => {
       );
     }
   }
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const data = await getRequestFetch(
-          "https://fakestoreapi.com/products?limit=5"
-        );
-        const productWithQuantity = data.map((item) => {
-          return { ...item, quantity: 1 };
-        });
-        setData(productWithQuantity);
-        console.log(productWithQuantity);
-        setError(null);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProducts();
-  }, []);
-
   return (
     <>
       {loading && <p>Loading posts...</p>}

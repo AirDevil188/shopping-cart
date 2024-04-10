@@ -1,10 +1,16 @@
 import { useState } from "react";
-import { useLocation, useOutletContext } from "react-router-dom";
+import { useLocation, useOutletContext, useParams } from "react-router-dom";
+import getData from "../helper/getData";
+import ErrorPage from "../routes/ErrorPage";
 
 const ProductDetails = () => {
   const { state } = useLocation();
+  const { productID } = useParams();
+  const { data, loading, error } = getData(`/products/${productID}`);
+
   const [cart, setCart] = useOutletContext();
   const [value, setValue] = useState(1);
+  console.log(data);
 
   function handleAddToCart(e) {
     const id = Number(e.target.id);
@@ -24,33 +30,44 @@ const ProductDetails = () => {
   }
 
   return (
-    <section className="product-section" id={state.id}>
-      <div className="product-title">
-        <h3>{state.title}</h3>
-      </div>
-      <div className="product-image">
-        <picture>
-          <img src={state.image} alt="" />
-        </picture>
-      </div>
-      <div className="product-description">
-        <p>{state.description}</p>
-      </div>
-      <div className="price-container">
-        <output>{state.price}</output>
-      </div>
-      <div className="buttons-container">
-        <input
-          type="number"
-          id={state.id}
-          onChange={(event) => setValue(Number(event.target.value))}
-          min={1}
-        />
-        <button onClick={handleAddToCart} type="submit" id={state.id}>
-          ADD TO CART
-        </button>
-      </div>
-    </section>
+    <>
+      {loading && <p>Loading posts...</p>}
+      {error && <p>{<ErrorPage />}</p>}
+      {data &&
+        data.map((data) => {
+          return (
+            <section className="product-section" key={data.id}>
+              <figure key={data.id}>
+                <div className="product-title">
+                  <h3>{data.title}</h3>
+                </div>
+                <div className="product-image">
+                  <picture>
+                    <img src={data.image} alt="" />
+                  </picture>
+                </div>
+                <div className="product-description">
+                  <p>{data.description}</p>
+                </div>
+                <div className="price-container">
+                  <output>{data.price}</output>
+                </div>
+                <div className="buttons-container">
+                  <input
+                    type="number"
+                    id={data.id}
+                    onChange={(event) => setValue(Number(event.target.value))}
+                    min={1}
+                  />
+                  <button onClick={handleAddToCart} type="submit" id={data.id}>
+                    ADD TO CART
+                  </button>
+                </div>
+              </figure>
+            </section>
+          );
+        })}
+    </>
   );
 };
 
