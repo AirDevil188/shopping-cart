@@ -1,10 +1,5 @@
-import {
-  BrowserRouter,
-  RouterProvider,
-  createMemoryRouter,
-  useOutletContext,
-} from "react-router-dom";
-import { getByRole, render, screen } from "@testing-library/react";
+import { BrowserRouter, createMemoryRouter } from "react-router-dom";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { expect } from "vitest";
 import HomePage from "../components/Home";
@@ -92,8 +87,6 @@ it("Checks if number of products in cart is one", async () => {
       <Cart></Cart>
     </BrowserRouter>
   );
-
-  screen.debug();
   expect(screen.getByRole("heading", { name: "Your Cart: 1" }));
 });
 
