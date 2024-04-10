@@ -62,9 +62,5 @@ const Cart = () => {
 
 CartProducts.propTypes = {
   data: PropTypes.array.isRequired,
-  handleIncrement: PropTypes.func.isRequired,
-  handleDecrement: PropTypes.func.isRequired,
-  handleDelete: PropTypes.func.isRequired,
 };
-
 export default Cart;
