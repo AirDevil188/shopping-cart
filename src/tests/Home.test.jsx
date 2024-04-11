@@ -44,11 +44,12 @@ beforeEach(() => {
   );
 });
 
-it("check if heading is in the document", () => {
+it("checks if heading section is in the document", () => {
   const heading = screen.getByRole("heading", {
-    name: "Come as costumer stay as family!",
+    name: "Fresh prices, the right place to buy everything!",
   });
-  const heroImage = screen.getByRole("img");
+  const headingSection = screen.getByRole("generic");
+
   expect(heading).toBeInTheDocument();
-  expect(heroImage).toBeInTheDocument();
+  expect(headingSection).toBeInTheDocument();
 });
