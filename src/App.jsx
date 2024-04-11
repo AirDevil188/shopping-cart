@@ -34,6 +34,12 @@ body {
   font-family: "Italiana", sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;;
 
 }
+
+#root {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
 `;
 
 export default App;
