@@ -6,6 +6,7 @@ import {
   localStorageGetData,
   localStorageSetData,
 } from "./helper/localStorage";
+import { createGlobalStyle } from "styled-components";
 
 const App = () => {
   const [cart, setCart] = useState(() => {
@@ -18,11 +19,25 @@ const App = () => {
 
   return (
     <>
+      <GlobalStyle />
       <Header cart={cart.length} />
       <Footer />
       <Outlet context={[cart, setCart]} />
     </>
   );
 };
+
+const GlobalStyle = createGlobalStyle`
+
+
+
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Italiana", sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;;
+
+}
+`;
 
 export default App;
