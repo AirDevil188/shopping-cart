@@ -21,8 +21,8 @@ const App = () => {
     <>
       <GlobalStyle />
       <Header cart={cart.length} />
-      <Footer />
       <Outlet context={[cart, setCart]} />
+      <Footer />
     </>
   );
 };
