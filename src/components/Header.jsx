@@ -1,16 +1,21 @@
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FaShoppingBasket } from "react-icons/fa";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Header = ({ cart }) => {
   const [nav, setNav] = useState(false);
+  const location = useLocation();
 
   const handleHamburger = () => {
     setNav(!nav);
   };
+
+  useEffect(() => {
+    setNav((prevState) => (prevState ? !prevState : prevState));
+  }, [location.pathname]);
 
   return (
     <StyledHeader>
@@ -18,17 +23,11 @@ const Header = ({ cart }) => {
         <StyledDefaultButton title="hamburger-button" onClick={handleHamburger}>
           <GiHamburgerMenu color="#fff" size={20} />
         </StyledDefaultButton>
-        <Link
-          to={"/"}
-          onClick={(prevState) => setNav(prevState ? !prevState : !prevState)}
-        >
+        <Link to={"/"}>
           <h1>eStore</h1>
         </Link>
         <NavLink to={"/shopping-cart"}>
-          <StyledDefaultButton
-            title="cart-button"
-            onClick={(prevState) => setNav(prevState ? !prevState : !prevState)}
-          >
+          <StyledDefaultButton title="cart-button">
             <FaShoppingBasket color="#fff" size={20} />
             {cart > 0 ? <StyledCartCounter>{cart}</StyledCartCounter> : null}
           </StyledDefaultButton>
