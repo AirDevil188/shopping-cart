@@ -16,7 +16,7 @@ const Header = ({ cart }) => {
     <StyledHeader>
       <StyledNavbar>
         <StyledDefaultButton title="hamburger-button" onClick={handleHamburger}>
-          <GiHamburgerMenu color="#fff" />
+          <GiHamburgerMenu color="#fff" size={20} />
         </StyledDefaultButton>
         <Link
           to={"/"}
@@ -29,7 +29,8 @@ const Header = ({ cart }) => {
             title="cart-button"
             onClick={(prevState) => setNav(prevState ? !prevState : !prevState)}
           >
-            <FaShoppingBasket color="#fff" />
+            <FaShoppingBasket color="#fff" size={20} />
+            {cart > 0 ? <StyledCartCounter>{cart}</StyledCartCounter> : null}
           </StyledDefaultButton>
         </NavLink>
       </StyledNavbar>
@@ -64,6 +65,20 @@ const StyledDefaultButton = styled.button`
   padding: 1rem;
   background: #000;
   border: 1px solid #fff;
+`;
+
+const StyledCartCounter = styled.div`
+  display: flex;
+  align-items: center;
+  position: absolute;
+  background-color: red;
+  right: 21px;
+  top: 48px;
+  padding: 3px;
+  max-height: 9px;
+  text-align: center;
+  border-radius: 10px;
+  color: #fff;
 `;
 
 const StyledLinks = styled.li`
