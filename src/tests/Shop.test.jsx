@@ -1,95 +1,145 @@
 import { expect, it } from "vitest";
-import { render, screen, waitFor } from "@testing-library/react";
-import { RouterProvider, createMemoryRouter } from "react-router-dom";
+import { render, screen } from "@testing-library/react";
+import { BrowserRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
-import App from "../App";
-import ErrorPage from "../routes/ErrorPage";
-import HomePage from "../components/Home";
-import Shop from "../components/Shop";
-import ProductDetails from "../components/ProductDetails";
-import Cart from "../components/Cart";
 
-const routes = [
+import ShopProducts from "../components/ShopProducts";
+
+const mockCart = [
   {
-    element: <App />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        path: "/",
-        element: <HomePage />,
-      },
-      {
-        path: "/shop",
-        element: <Shop />,
-      },
-
-      {
-        path: "shop/products/:productID",
-        element: <ProductDetails />,
-      },
-      { path: "/shopping-cart", element: <Cart /> },
-    ],
+    id: 1,
+    title: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
+    price: 109.95,
+    quantity: 1,
+    description:
+      "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+    category: "men's clothing",
+    image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+    rating: {
+      rate: 3.9,
+      count: 120,
+    },
+  },
+  {
+    id: 2,
+    title: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
+    price: 109.95,
+    quantity: 1,
+    description:
+      "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+    category: "men's clothing",
+    image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+    rating: {
+      rate: 3.9,
+      count: 120,
+    },
+  },
+  {
+    id: 3,
+    title: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
+    price: 109.95,
+    quantity: 1,
+    description:
+      "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+    category: "men's clothing",
+    image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+    rating: {
+      rate: 3.9,
+      count: 120,
+    },
+  },
+  {
+    id: 4,
+    title: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
+    price: 109.95,
+    quantity: 1,
+    description:
+      "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+    category: "men's clothing",
+    image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+    rating: {
+      rate: 3.9,
+      count: 120,
+    },
+  },
+  {
+    id: 5,
+    title: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
+    price: 109.95,
+    quantity: 1,
+    description:
+      "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+    category: "men's clothing",
+    image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+    rating: {
+      rate: 3.9,
+      count: 120,
+    },
   },
 ];
 
-const router = createMemoryRouter(routes, {
-  initialEntries: ["/", "/shop", "shop/products/:productID", "/shopping-cart"],
-  initialIndex: 1,
+vi.mock("react-router-dom", async () => {
+  const mod = await vi.importActual("react-router-dom");
+  return {
+    ...mod,
+    useOutletContext: () => [mockCart],
+  };
 });
 
-beforeEach(() => {
+it("Renders shop with products", async () => {
   render(
-    <RouterProvider router={router}>
-      <Shop></Shop>
-    </RouterProvider>
+    <BrowserRouter>
+      <ShopProducts data={mockCart}></ShopProducts>
+    </BrowserRouter>
   );
-});
 
-it("Checks if heading is in the document", () => {
-  expect(
-    screen.getByRole("heading", { name: "Check out our awesome new items!" })
-  );
-});
-
-it("Checks if every product item has been rendered and has title, picture, price and button element", async () => {
-  await waitFor(() => {
-    const products = screen.getAllByRole("figure");
-    const headings = screen.getAllByRole("heading", { level: 4 });
-    const images = screen.getAllByRole("img");
-    const price = screen.getAllByRole("status");
-    const buttons = screen.getAllByRole("button");
-    const totalProducts = products.length;
-
-    expect(products).toHaveLength(totalProducts);
-    expect(images).toHaveLength(totalProducts);
-    expect(headings).toHaveLength(totalProducts);
-    expect(price).toHaveLength(totalProducts);
-    expect(buttons).toHaveLength(totalProducts);
-  });
-});
-
-it("Should update cart number on the NavLink if the add to cart button is clicked", async () => {
-  const user = userEvent.setup();
-
+  const figureElement = await screen.findAllByRole("figure");
+  const headingElement = await screen.findAllByRole("heading");
+  const outputElement = await screen.findAllByRole("status");
   const addToCartButton = await screen.findAllByRole("button", {
     name: "Add To Cart",
   });
-  const cartLink = screen.getByRole("link", { name: "Cart (0)" });
-  expect(cartLink).toHaveTextContent("Cart (0)");
-  await user.click(addToCartButton[0]);
 
-  expect(cartLink).toHaveTextContent("Cart (1)");
-  await user.click(addToCartButton[1]);
-  expect(cartLink).toHaveTextContent("Cart (2)");
+  expect(figureElement[0]).toBeInTheDocument();
+  expect(figureElement[1]).toBeInTheDocument();
+  expect(figureElement[2]).toBeInTheDocument();
+  expect(figureElement[3]).toBeInTheDocument();
+  expect(figureElement[4]).toBeInTheDocument();
+
+  expect(headingElement[0]).toBeInTheDocument();
+  expect(headingElement[1]).toBeInTheDocument();
+  expect(headingElement[2]).toBeInTheDocument();
+  expect(headingElement[3]).toBeInTheDocument();
+  expect(headingElement[4]).toBeInTheDocument();
+
+  expect(outputElement[0]).toBeInTheDocument();
+  expect(outputElement[1]).toBeInTheDocument();
+  expect(outputElement[2]).toBeInTheDocument();
+  expect(outputElement[3]).toBeInTheDocument();
+  expect(outputElement[4]).toBeInTheDocument();
+
+  expect(addToCartButton[0]).toBeInTheDocument();
+  expect(addToCartButton[1]).toBeInTheDocument();
+  expect(addToCartButton[2]).toBeInTheDocument();
+  expect(addToCartButton[3]).toBeInTheDocument();
+  expect(addToCartButton[4]).toBeInTheDocument();
 });
 
-it("Should not update Cart number on NavLink if the same product is added", async () => {
-  const user = userEvent.setup();
+it("Expects for function to get called when the add to cart button is clicked.", async () => {
+  const mockAddToCartHandler = vi.fn();
+  render(
+    <BrowserRouter>
+      <ShopProducts
+        data={mockCart}
+        handleAddToCart={mockAddToCartHandler}
+      ></ShopProducts>
+    </BrowserRouter>
+  );
   const addToCartButton = await screen.findAllByRole("button", {
     name: "Add To Cart",
   });
-  const cartLink = screen.getByRole("link", { name: "Cart (2)" });
-  expect(cartLink).toHaveTextContent("Cart (2)");
-  await user.click(addToCartButton[0]);
-  expect(cartLink).toHaveTextContent("Cart (2)");
+  await userEvent.click(addToCartButton[0]);
+
+  screen.debug();
+  expect(mockAddToCartHandler).toBeCalled();
 });
