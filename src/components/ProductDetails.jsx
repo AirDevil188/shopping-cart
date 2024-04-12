@@ -6,6 +6,7 @@ import ErrorPage from "../routes/ErrorPage";
 const ProductDetails = () => {
   const { productID } = useParams();
   const { data, loading, error } = getData(`/products/${productID}`);
+  console.log(data);
 
   const [cart, setCart] = useOutletContext();
   const [value, setValue] = useState(1);
@@ -15,9 +16,10 @@ const ProductDetails = () => {
     const cartItem = cart.find((item) => item.id === id);
 
     if (!cartItem) {
-      const newObj = Object.assign({}, state);
-      newObj.quantity = value;
-      setCart((prevState) => [...prevState, newObj]);
+      setCart((prevState) => [
+        ...prevState,
+        data.find((item) => (item.quantity = value)),
+      ]);
     } else {
       setCart(
         cart.map((item) =>
