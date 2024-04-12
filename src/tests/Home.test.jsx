@@ -48,8 +48,8 @@ it("checks if heading section is in the document", () => {
   const heading = screen.getByRole("heading", {
     name: "Fresh prices, the right place to buy everything!",
   });
-  const headingSection = screen.getByRole("generic");
+  const headingSection = screen.getAllByRole("generic");
 
   expect(heading).toBeInTheDocument();
-  expect(headingSection).toBeInTheDocument();
+  expect(headingSection[0]).toBeInTheDocument();
 });
