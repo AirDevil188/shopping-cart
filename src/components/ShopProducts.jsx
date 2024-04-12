@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 const ShopProducts = ({ data, handleAddToCart }) => {
   return data.map((data) => {
     return (
-      <figure id={data.id} key={data.id}>
+      <StyledFigureElement id={data.id} key={data.id}>
         <Link
           state={data}
           to={`/shop/products/${String(data.id)}`}
@@ -27,9 +28,20 @@ const ShopProducts = ({ data, handleAddToCart }) => {
             Add To Cart
           </button>
         </div>
-      </figure>
+      </StyledFigureElement>
     );
   });
 };
 
 export default ShopProducts;
+
+const StyledFigureElement = styled.figure`
+  /* width: 150px;
+  height: auto; */
+
+  width: 300px;
+  height: auto;
+  img {
+    width: 100%;
+  }
+`;
