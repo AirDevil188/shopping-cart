@@ -28,6 +28,11 @@ const App = () => {
 };
 
 const GlobalStyle = createGlobalStyle`
+
+*, *:before, *:after {
+  padding: 0;
+  margin: 0;
+}
 body {
   margin: 0;
   padding: 0;

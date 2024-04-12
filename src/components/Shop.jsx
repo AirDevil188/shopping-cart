@@ -36,7 +36,7 @@ const Shop = ({
   }, [data]);
 
   return (
-    <StyledItemSection>
+    <section className="shop-section">
       <FilterSection
         handleCategoryChange={handleCategoryChange}
         handleSearchChange={handleSearchChange}
@@ -50,7 +50,7 @@ const Shop = ({
           products={products}
         ></ProductSection>
       </StyledItemsContainer>
-    </StyledItemSection>
+    </section>
   );
 };
 
@@ -94,7 +94,7 @@ const ProductSection = ({
 
 const FilterSection = ({ handleCategoryChange, handleSearchChange }) => {
   return (
-    <section className="filter-section">
+    <StyledFilterSection>
       <div className="categories-filter">
         <label htmlFor="category-select">Choose a category:</label>
 
@@ -113,7 +113,7 @@ const FilterSection = ({ handleCategoryChange, handleSearchChange }) => {
       <div className="search-box">
         <input type="search" id="search-box" onChange={handleSearchChange} />
       </div>
-    </section>
+    </StyledFilterSection>
   );
 };
 
@@ -122,13 +122,18 @@ ShopProducts.propTypes = {
   handleAddToCart: PropTypes.func.isRequired,
 };
 
-const StyledItemSection = styled.section`
-  /* display: grid;
-  grid-template-rows: repeat(3, 1fr); */
-`;
-
 const StyledItemsContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  justify-content: center;
+  align-items: stretch;
+  justify-items: center;
+  gap: 20px;
+  padding: 1rem;
+`;
+
+const StyledFilterSection = styled.section`
+  display: flex;
+  justify-content: center;
 `;
 export default Shop;

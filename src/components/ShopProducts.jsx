@@ -5,29 +5,35 @@ const ShopProducts = ({ data, handleAddToCart }) => {
   return data.map((data) => {
     return (
       <StyledFigureElement id={data.id} key={data.id}>
-        <Link
-          state={data}
-          to={`/shop/products/${String(data.id)}`}
-          title="prod-link"
-        >
-          <picture>
-            <img src={data.image} alt="" />
-          </picture>
-          <h4 className="data-name">{data.title}</h4>
-        </Link>
-        <div className="price-container">
+        <StyledImageCardContainer>
+          <Link
+            state={data}
+            to={`/shop/products/${String(data.id)}`}
+            title="prod-link"
+            className="product-link-img"
+          >
+            <picture>
+              <img src={data.image} alt="" />
+            </picture>
+          </Link>
+        </StyledImageCardContainer>
+        <StyledTitleContainer>
+          <Link to={`/shop/products/${String(data.id)}`}>
+            <h4 className="data-name">{data.title}</h4>
+          </Link>
+        </StyledTitleContainer>
+        <StyledPriceContainer>
           <output>${data.price}</output>
-        </div>
-        <div className="button-container">
-          <button
-            className="btn-add-to-cart"
+        </StyledPriceContainer>
+        <StyledCardContainer>
+          <StyledAddToCartButton
             onClick={handleAddToCart}
             id={data.id}
             value={data.quantity}
           >
             Add To Cart
-          </button>
-        </div>
+          </StyledAddToCartButton>
+        </StyledCardContainer>
       </StyledFigureElement>
     );
   });
@@ -36,12 +42,57 @@ const ShopProducts = ({ data, handleAddToCart }) => {
 export default ShopProducts;
 
 const StyledFigureElement = styled.figure`
-  /* width: 150px;
-  height: auto; */
-
-  width: 300px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: space-evenly;
   height: auto;
+  max-width: 150px;
+  text-align: center;
+  gap: 15px;
+
   img {
     width: 100%;
   }
+`;
+
+const StyledCardContainer = styled.div``;
+
+const StyledImageCardContainer = styled.div`
+  display: flex;
+  flex: 1;
+  align-items: center;
+`;
+
+const StyledAddToCartButton = styled.div`
+  background-color: #000;
+  color: #fff;
+  padding: 10px;
+  text-transform: uppercase;
+  cursor: pointer;
+`;
+
+const StyledTitleContainer = styled(StyledCardContainer)`
+  font-size: 1.5rem;
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+`;
+
+const StyledPriceContainer = styled(StyledCardContainer)`
+  font-size: 1.1rem;
+  font-weight: 900;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Open Sans",
+    "Helvetica Neue",
+    sans-serif;
 `;
