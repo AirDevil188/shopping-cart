@@ -4,7 +4,7 @@ import { useOutletContext } from "react-router-dom";
 import getData from "../helper/getData";
 import ErrorPage from "../routes/ErrorPage";
 import { useEffect, useState } from "react";
-import FilterSection from "./FIlterSection";
+import FilterSection from "./FilterSection";
 
 const Shop = () => {
   return (
@@ -47,20 +47,18 @@ const ProductSection = () => {
 
   function handleCategoryChange(e) {
     const newCategoryValue = e.target.value;
-    console.log(newCategoryValue);
-    console.log(data);
     if (e.target.value === "all") setProducts(data);
     else setProducts(data.filter((item) => item.category === newCategoryValue));
   }
 
   function handleSearchChange(e) {
     const keyword = e.target.value;
-
-    console.log(keyword);
     if (keyword == "") setProducts(data);
     else
       setProducts(
-        data.filter((item) => item.title.toLowerCase().includes(keyword))
+        data.filter((item) =>
+          item.title.toLowerCase().includes(keyword.toLowerCase())
+        )
       );
   }
   return (

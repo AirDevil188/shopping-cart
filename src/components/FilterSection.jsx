@@ -6,7 +6,7 @@ const FilterSection = ({ handleCategoryChange, handleSearchChange }) => {
 
         <select
           name="catagories"
-          id="catagories-select"
+          id="category-select"
           onChange={handleCategoryChange}
         >
           <option value="all">All</option>
@@ -17,7 +17,7 @@ const FilterSection = ({ handleCategoryChange, handleSearchChange }) => {
         </select>
       </div>
       <div className="search-box">
-        <input type="search" onChange={handleSearchChange} />
+        <input type="search" id="search-box" onChange={handleSearchChange} />
       </div>
     </section>
   );
