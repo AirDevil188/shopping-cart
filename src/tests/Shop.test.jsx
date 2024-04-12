@@ -96,9 +96,7 @@ it("Renders shop with products", async () => {
   const figureElement = await screen.findAllByRole("figure");
   const headingElement = await screen.findAllByRole("heading");
   const outputElement = await screen.findAllByRole("status");
-  const addToCartButton = await screen.findAllByRole("button", {
-    name: "Add To Cart",
-  });
+  const addToCartButton = await screen.findAllByTitle("add-cart-btn");
 
   expect(figureElement[0]).toBeInTheDocument();
   expect(figureElement[1]).toBeInTheDocument();
@@ -135,9 +133,7 @@ it("Expects for function to get called when the add to cart button is clicked.",
       ></ShopProducts>
     </BrowserRouter>
   );
-  const addToCartButton = await screen.findAllByRole("button", {
-    name: "Add To Cart",
-  });
+  const addToCartButton = await screen.findAllByTitle("add-cart-btn");
   await userEvent.click(addToCartButton[0]);
 
   screen.debug();

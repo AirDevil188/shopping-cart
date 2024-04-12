@@ -30,6 +30,7 @@ const ShopProducts = ({ data, handleAddToCart }) => {
             onClick={handleAddToCart}
             id={data.id}
             value={data.quantity}
+            title="add-cart-btn"
           >
             Add To Cart
           </StyledAddToCartButton>
