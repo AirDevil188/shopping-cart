@@ -13,20 +13,22 @@ const Shop = ({
 }) => {
   const { data, loading, error } = getData("/products");
   const [products, setProducts] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
 
   function handleCategoryChange(e) {
+    setSearchInput("");
     const newCategoryValue = e.target.value;
     if (e.target.value === "all") setProducts(data);
     else setProducts(data.filter((item) => item.category === newCategoryValue));
   }
 
   function handleSearchChange(e) {
-    const keyword = e.target.value;
-    if (keyword == "") setProducts(data);
+    setSearchInput(e.target.value);
+    if (searchInput == "") setProducts(data);
     else
       setProducts(
         data.filter((item) =>
-          item.title.toLowerCase().includes(keyword.toLowerCase())
+          item.title.toLowerCase().includes(searchInput.toLowerCase())
         )
       );
   }
@@ -95,8 +97,19 @@ const ProductSection = ({
 const FilterSection = ({ handleCategoryChange, handleSearchChange }) => {
   return (
     <StyledFilterSection>
-      <div className="categories-filter">
-        <label htmlFor="category-select">Choose a category:</label>
+      <StyledSearchContainer>
+        <label htmlFor="search-box"></label>
+        <input
+          type="search"
+          id="search-box"
+          onChange={handleSearchChange}
+          onBlur={(e) => (e.target.value = "")}
+          placeholder=" Search..."
+        />
+      </StyledSearchContainer>
+
+      <StyledCategoryFilterContainer>
+        <label htmlFor="category-select"></label>
 
         <select
           name="catagories"
@@ -109,10 +122,7 @@ const FilterSection = ({ handleCategoryChange, handleSearchChange }) => {
           <option value="men's clothing">Men's Clothing</option>
           <option value="women's clothing">Women's Clothing</option>
         </select>
-      </div>
-      <div className="search-box">
-        <input type="search" id="search-box" onChange={handleSearchChange} />
-      </div>
+      </StyledCategoryFilterContainer>
     </StyledFilterSection>
   );
 };
@@ -134,6 +144,29 @@ const StyledItemsContainer = styled.div`
 
 const StyledFilterSection = styled.section`
   display: flex;
+  flex-flow: column wrap;
   justify-content: center;
+`;
+
+const StyledSearchContainer = styled.div`
+  padding: 1rem;
+  text-align: center;
+
+  input {
+    padding: 5px;
+    border-radius: 15px;
+    width: 80%;
+  }
+`;
+
+const StyledCategoryFilterContainer = styled.div`
+  padding: 1rem;
+  text-align: center;
+
+  select {
+    padding: 5px;
+    border-radius: 15px;
+    width: 80%;
+  }
 `;
 export default Shop;
