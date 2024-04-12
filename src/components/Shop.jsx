@@ -58,7 +58,10 @@ const ProductSection = () => {
 
     console.log(keyword);
     if (keyword == "") setProducts(data);
-    else setProducts(data.filter((item) => item.title === keyword));
+    else
+      setProducts(
+        data.filter((item) => item.title.toLowerCase().includes(keyword))
+      );
   }
   return (
     <>
