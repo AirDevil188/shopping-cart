@@ -125,31 +125,3 @@ const StyledTitleContainer = styled.div`
   flex: 1;
 `;
 export default CartProducts;
-
-// const StyledListElement = styled.li`
-//   display: flex;
-//   flex-flow: row nowrap;
-//   justify-content: space-between;
-
-//   gap: 20px;
-//   text-align: center;
-
-//   img {
-//     max-width: 100px;
-//   }
-
-//   .cart-img {
-//     display: flex;
-//     flex-flow: column wrap;
-//     gap: 5px;
-//   }
-
-//   a {
-//     color: #000;
-//     text-decoration: none;
-//   }
-
-//   @media (min-width: 768px) {
-//     flex-direction: column;
-//   }
-// `;
