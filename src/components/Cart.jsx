@@ -88,14 +88,21 @@ const StyledEmptyContainer = styled.section`
 `;
 
 const StyledShoppingCartSection = styled.section`
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex: 1;
+  flex: 1; */
+
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr;
+  /* align-items: center;
+  flex: 1; */
 
   @media (min-width: 800px) {
-    flex-flow: row-reverse;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 5rem;
   }
 `;
@@ -106,7 +113,7 @@ const StyledShoppingCartUL = styled.ul`
   gap: 20px;
 
   @media (min-width: 800px) {
-    min-width: 60%;
+    grid-column: 1/3;
     padding: 2rem;
   }
 `;
@@ -147,6 +154,10 @@ const StyledCheckoutContainer = styled.div`
     border: 1px solid white;
     padding: 1rem;
     cursor: pointer;
+  }
+
+  @media (min-width: 800px) {
+    order: 2;
   }
 `;
 
