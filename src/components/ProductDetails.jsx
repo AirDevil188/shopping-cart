@@ -92,7 +92,7 @@ const StyledProductSection = styled.section`
   }
 
   img {
-    max-width: 450px;
+    max-width: 300px;
   }
 
   output {
