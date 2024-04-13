@@ -36,8 +36,8 @@ it("Checks if the product is being rendered properly", async () => {
       <CartProducts data={mockCart}></CartProducts>
     </BrowserRouter>
   );
-  expect(screen.getByRole("figure")).toBeInTheDocument();
-  expect(screen.getByRole("figure")).toBeInTheDocument();
+  expect(screen.getByTitle("li-item")).toBeInTheDocument();
+
   expect(
     screen.getByRole("heading", {
       name: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",

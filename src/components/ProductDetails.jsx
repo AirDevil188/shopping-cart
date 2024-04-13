@@ -7,7 +7,6 @@ import styled from "styled-components";
 const ProductDetails = () => {
   const { productID } = useParams();
   const { data, loading, error } = getData(`/products/${productID}`);
-  console.log(data);
 
   const [cart, setCart] = useOutletContext();
   const [value, setValue] = useState(1);
