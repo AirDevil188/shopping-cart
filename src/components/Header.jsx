@@ -18,106 +18,117 @@ const Header = ({ cart }) => {
   }, [location.pathname]);
 
   return (
-    <StyledHeader>
+    <header>
       <StyledNavbar>
-        <StyledDefaultButton title="hamburger-button" onClick={handleHamburger}>
-          <GiHamburgerMenu color="#fff" size={20} />
-        </StyledDefaultButton>
-        <Link to={"/"}>
-          <h1>eStore</h1>
-        </Link>
-        <NavLink to={"/shopping-cart"}>
-          <StyledDefaultButton title="cart-button">
-            <FaShoppingBasket color="#fff" size={20} />
-            {cart > 0 ? <StyledCartCounter>{cart}</StyledCartCounter> : null}
-          </StyledDefaultButton>
-        </NavLink>
+        <div className="hamburger-container">
+          <button onClick={handleHamburger} title="hamburger-button">
+            <GiHamburgerMenu size={30} color="#fff"></GiHamburgerMenu>
+          </button>
+
+          {nav ? (
+            <menu className="nav-menu">
+              <li onClick={handleHamburger}>
+                <NavLink to={"/"}>Home</NavLink>
+              </li>
+              <li onClick={handleHamburger}>
+                <NavLink to={"/shop"}>Shop</NavLink>
+              </li>
+            </menu>
+          ) : null}
+        </div>
+
+        <menu className="nav-menu-lg">
+          <li>
+            <NavLink to={"/"}>Home</NavLink>
+          </li>
+          <li>
+            <NavLink to={"/shop"}>Shop</NavLink>
+          </li>
+        </menu>
+
+        <menu className="shopping-cart-menu">
+          <NavLink to={"/shopping-cart"}>
+            <button title="cart-button">
+              <FaShoppingBasket size={30} color="#fff"></FaShoppingBasket>
+              {cart > 0 ? <div className="cart-counter">{cart}</div> : null}
+            </button>
+          </NavLink>
+        </menu>
       </StyledNavbar>
-      <StyledMenuNavBar>
-        {nav ? (
-          <StyledUL>
-            <StyledLinks onClick={handleHamburger}>
-              <NavLink to={"/"}>Home</NavLink>
-            </StyledLinks>
-            <StyledLinks onClick={handleHamburger}>
-              <NavLink to={"/shop"}>Shop</NavLink>
-            </StyledLinks>
-          </StyledUL>
-        ) : null}
-      </StyledMenuNavBar>
-    </StyledHeader>
+    </header>
   );
 };
 
-/// styled-components
-
-const StyledHeader = styled.header`
-  h1 {
-    font-size: 3rem;
-    color: #fff;
-  }
-`;
-
-const StyledDefaultButton = styled.button`
-  cursor: pointer;
-  margin: 1rem;
-  padding: 1rem;
-  background: #000;
-  border: 1px solid #fff;
-`;
-
-const StyledCartCounter = styled.div`
-  display: flex;
-  align-items: center;
-  position: absolute;
-  background-color: red;
-  right: 21px;
-  top: 48px;
-  padding: 3px;
-  max-height: 9px;
-  text-align: center;
-  border-radius: 10px;
-  color: #fff;
-`;
-
-const StyledLinks = styled.li`
-  a {
-    text-decoration: none;
-    color: #fff;
-  }
-`;
-
-const StyledUL = styled.ul`
-  display: flex;
-  flex-flow: column wrap;
-  list-style: none;
-  gap: 15px;
-  margin: 0;
-  padding: 0;
-  background-color: #000;
-  font-size: 2.5rem;
-  text-align: center;
-`;
+export default Header;
 
 const StyledNavbar = styled.nav`
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row;
   justify-content: space-between;
-  align-items: center;
-  text-align: center;
-  font-weight: 500;
-  font-size: 3rem;
   background-color: #000;
+  .nav-menu {
+    display: flex;
+    flex-flow: column wrap;
+    list-style: none;
+    align-items: center;
+    gap: 15px;
+    padding: 5px;
+    background-color: #000;
+    font-size: 1.5rem;
+    text-align: center;
+  }
+  button {
+    background-color: #000;
+    border: 1px solid #fff;
+    cursor: pointer;
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+  .shopping-cart-menu {
+    display: flex;
+    flex-flow: row;
+  }
 
   a {
     text-decoration: none;
+    color: #fff;
+  }
+
+  .nav-menu-lg {
+    display: none;
+    list-style: none;
+    align-items: center;
+    gap: 15px;
+    padding: 5px;
+    background-color: #000;
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .cart-counter {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    background-color: red;
+    right: 21px;
+    top: 48px;
+    padding: 3px;
+    max-height: 9px;
+    text-align: center;
+    border-radius: 10px;
+    color: #fff;
+  }
+  @media (min-width: 800px) {
+    .hamburger-container {
+      display: none;
+    }
+
+    .nav-menu-lg {
+      display: flex;
+      flex-flow: row nowrap;
+      padding: 1rem;
+      font-size: 2rem;
+    }
   }
 `;
-
-const StyledMenuNavBar = styled.nav`
-  display: flex;
-  align-content: center;
-  flex-flow: column wrap;
-  background-color: #000;
-`;
-export default Header;

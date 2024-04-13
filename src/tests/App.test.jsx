@@ -39,8 +39,9 @@ it("routes to Shop page when Shop link is clicked", async () => {
     </Router>
   );
   await userEvent.click(screen.getByTitle("hamburger-button"));
+  const shopLink = screen.getAllByText("Shop");
 
-  await userEvent.click(screen.getByText("Shop"));
+  await userEvent.click(shopLink[0]);
   await waitFor(() => {
     expect(screen.getByText("Mock Shop Page")).toBeInTheDocument();
   });
@@ -57,7 +58,6 @@ it("routes to Cart page when Cart link is clicked", async () => {
 
   const cart = screen.getByTitle("cart-button");
   await userEvent.click(cart);
-  console.log(cart, "cart");
   await waitFor(() => {
     expect(screen.getByText("Mock Cart Page")).toBeInTheDocument();
   });
