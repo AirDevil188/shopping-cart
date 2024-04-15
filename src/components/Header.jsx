@@ -20,6 +20,9 @@ const Header = ({ cart }) => {
   return (
     <header>
       <StyledNavbar>
+        <StyledHeaderContainer>
+          <h3 className="logo-text">eStore</h3>
+        </StyledHeaderContainer>
         <div className="hamburger-container">
           <button onClick={handleHamburger} title="hamburger-button">
             <GiHamburgerMenu size={30} color="#fff"></GiHamburgerMenu>
@@ -45,7 +48,6 @@ const Header = ({ cart }) => {
             <NavLink to={"/shop"}>Shop</NavLink>
           </li>
         </menu>
-
         <menu className="shopping-cart-menu">
           <NavLink to={"/shopping-cart"}>
             <button title="cart-button">
@@ -66,17 +68,20 @@ const StyledNavbar = styled.nav`
   flex-flow: row;
   justify-content: space-between;
   background-color: #000;
+  padding: 0.5rem;
   .nav-menu {
     display: flex;
     flex-flow: column wrap;
     list-style: none;
-    align-items: center;
     gap: 15px;
     padding: 5px;
     background-color: #000;
     font-size: 1.5rem;
     text-align: center;
+    text-transform: uppercase;
+    order: 1;
   }
+
   button {
     background-color: #000;
     border: 1px solid #fff;
@@ -86,8 +91,7 @@ const StyledNavbar = styled.nav`
   }
 
   .shopping-cart-menu {
-    display: flex;
-    flex-flow: row;
+    order: 3;
   }
 
   a {
@@ -104,6 +108,7 @@ const StyledNavbar = styled.nav`
     background-color: #000;
     font-size: 1.5rem;
     text-align: center;
+    text-transform: uppercase;
   }
 
   .cart-counter {
@@ -111,8 +116,8 @@ const StyledNavbar = styled.nav`
     align-items: center;
     position: absolute;
     background-color: red;
-    right: 21px;
-    top: 48px;
+    right: 27px;
+    top: 38px;
     padding: 3px;
     max-height: 9px;
     text-align: center;
@@ -127,8 +132,29 @@ const StyledNavbar = styled.nav`
     .nav-menu-lg {
       display: flex;
       flex-flow: row nowrap;
-      padding: 1rem;
+      justify-content: center;
       font-size: 2rem;
+      order: 2;
     }
+  }
+`;
+
+const StyledHeaderContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  background-color: #000;
+  color: #fff;
+  align-items: center;
+  font-size: 2rem;
+  order: 2;
+  align-self: flex-start;
+  text-wrap: nowrap;
+  margin-top: 1.2rem;
+
+  @media (min-width: 800px) {
+    order: 1;
+    font-size: 3rem;
+    align-self: center;
+    margin: 0;
   }
 `;
