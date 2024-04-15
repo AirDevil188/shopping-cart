@@ -38,7 +38,7 @@ const Shop = ({
   }, [data]);
 
   return (
-    <section className="shop-section">
+    <StyledShopSection>
       <FilterSection
         handleCategoryChange={handleCategoryChange}
         handleSearchChange={handleSearchChange}
@@ -52,7 +52,7 @@ const Shop = ({
           products={products}
         ></ProductSection>
       </StyledItemsContainer>
-    </section>
+    </StyledShopSection>
   );
 };
 
@@ -132,6 +132,9 @@ ShopProducts.propTypes = {
   handleAddToCart: PropTypes.func.isRequired,
 };
 
+const StyledShopSection = styled.section`
+  flex: 1;
+`;
 const StyledItemsContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
