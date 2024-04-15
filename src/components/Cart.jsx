@@ -88,17 +88,10 @@ const StyledEmptyContainer = styled.section`
 `;
 
 const StyledShoppingCartSection = styled.section`
-  /* display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  flex: 1; */
-
   display: grid;
+  flex: 1;
   grid-template-rows: 1fr;
   grid-template-columns: 1fr;
-  /* align-items: center;
-  flex: 1; */
 
   @media (min-width: 800px) {
     grid-template-rows: 1fr;

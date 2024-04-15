@@ -31,7 +31,7 @@ const StyledHeroContainer = styled.section`
   flex-flow: column wrap;
   gap: 5rem;
   align-items: center;
-  background-image: url("../public/assets/img/hero-image.webp");
+  background-image: url("./assets/img/hero-image.webp");
   padding: 10em 0 10em 0;
   background-size: cover;
   background-repeat: no-repeat;
