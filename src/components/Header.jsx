@@ -23,7 +23,9 @@ const Header = ({ cart }) => {
     <header>
       <StyledNavbar>
         <StyledHeaderContainer>
-          <h3 className="logo-text">eStore</h3>
+          <NavLink to={"/"}>
+            <h3 className="logo-text">eStore</h3>
+          </NavLink>
         </StyledHeaderContainer>
         <div className="hamburger-menu-container" onClick={handleHamburger}>
           <button title="hamburger-button">
@@ -97,7 +99,7 @@ const StyledNavbar = styled.nav`
     gap: 15px;
     padding: 5px;
     background-color: #000;
-    font-size: 1.5rem;
+    font-size: 2rem;
     text-align: center;
     text-transform: uppercase;
     animation: ${ExpandAnimation} 500ms ease-in-out;
