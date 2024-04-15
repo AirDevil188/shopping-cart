@@ -57,7 +57,6 @@ const ProductDetails = () => {
                   id={data.id}
                   onChange={(event) => setValue(Number(event.target.value))}
                   min={1}
-                  value={1}
                 />
                 <div className="buttons-container">
                   <button onClick={handleAddToCart} type="submit" id={data.id}>
