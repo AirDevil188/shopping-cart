@@ -1,7 +1,9 @@
 import { NavLink, Link, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { IoClose } from "react-icons/io5";
+
 import { FaShoppingBasket } from "react-icons/fa";
 import { useState, useEffect } from "react";
 
@@ -23,11 +25,16 @@ const Header = ({ cart }) => {
         <StyledHeaderContainer>
           <h3 className="logo-text">eStore</h3>
         </StyledHeaderContainer>
-        <div className="hamburger-container">
-          <button onClick={handleHamburger} title="hamburger-button">
-            <GiHamburgerMenu size={30} color="#fff"></GiHamburgerMenu>
+        <div className="hamburger-menu-container" onClick={handleHamburger}>
+          <button title="hamburger-button">
+            {nav ? (
+              <IoClose size={30} color="#fff"></IoClose>
+            ) : (
+              <GiHamburgerMenu size={30} color="#fff"></GiHamburgerMenu>
+            )}
           </button>
-
+        </div>
+        <div className="hamburger-container">
           {nav ? (
             <menu className="nav-menu">
               <li onClick={handleHamburger}>
@@ -63,10 +70,24 @@ const Header = ({ cart }) => {
 
 export default Header;
 
+const ExpandAnimation = keyframes`
+    
+  0% {
+    transform: scaleY(0);
+  }
+
+  70% {
+    transform: scaleY(1.1);
+  }
+  
+  100% {
+    transform: scaleY(1);
+  }
+`;
+
 const StyledNavbar = styled.nav`
-  display: flex;
-  flex-flow: row;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   background-color: #000;
   padding: 0.5rem;
   .nav-menu {
@@ -79,7 +100,13 @@ const StyledNavbar = styled.nav`
     font-size: 1.5rem;
     text-align: center;
     text-transform: uppercase;
-    order: 1;
+    animation: ${ExpandAnimation} 500ms ease-in-out;
+    transform-origin: top;
+  }
+
+  .hamburger-container {
+    grid-column: 1/4;
+    grid-row: 2/3;
   }
 
   button {
@@ -91,7 +118,9 @@ const StyledNavbar = styled.nav`
   }
 
   .shopping-cart-menu {
-    order: 3;
+    grid-column: 3/3;
+    display: flex;
+    justify-content: flex-end;
   }
 
   a {
@@ -129,12 +158,16 @@ const StyledNavbar = styled.nav`
       display: none;
     }
 
+    .hamburger-menu-container {
+      display: none;
+    }
+
     .nav-menu-lg {
       display: flex;
-      flex-flow: row nowrap;
       justify-content: center;
+      grid-column: 2/3;
+      grid-row: 1/2;
       font-size: 2rem;
-      order: 2;
     }
   }
 `;
@@ -142,19 +175,21 @@ const StyledNavbar = styled.nav`
 const StyledHeaderContainer = styled.div`
   display: flex;
   justify-content: center;
+  grid-column: 2/3;
+  grid-row: 1/2;
   background-color: #000;
   color: #fff;
-  align-items: center;
   font-size: 2rem;
-  order: 2;
-  align-self: flex-start;
+  align-self: center;
   text-wrap: nowrap;
-  margin-top: 1.2rem;
 
   @media (min-width: 800px) {
-    order: 1;
     font-size: 3rem;
+    padding: 1rem;
     align-self: center;
+    justify-content: flex-start;
     margin: 0;
+    grid-column: 1/2;
+    grid-row: 1/2;
   }
 `;

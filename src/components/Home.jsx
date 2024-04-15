@@ -29,6 +29,7 @@ const StyledMainSection = styled.main`
 const StyledHeroContainer = styled.section`
   display: flex;
   flex-flow: column wrap;
+  gap: 5rem;
   align-items: center;
   background-image: url("../public/assets/img/hero-image.webp");
   padding: 10em 0 10em 0;
@@ -51,7 +52,7 @@ const StyledShopNowButton = styled.button`
   background-color: #000;
   color: #fff;
   cursor: pointer;
-  border: none;
+  border: 1px solid #fff;
   padding: 1rem;
   margin: 0;
   border-radius: 10px;
