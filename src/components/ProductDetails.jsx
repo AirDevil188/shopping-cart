@@ -9,7 +9,8 @@ const ProductDetails = () => {
   const { data, loading, error } = getData(`/products/${productID}`);
 
   const [cart, setCart] = useOutletContext();
-  const [value, setValue] = useState(1);
+  const [value, setValue] = useState("1");
+  const reg = new RegExp("[1-9]");
 
   function handleAddToCart(e) {
     const id = Number(e.target.id);
@@ -18,12 +19,14 @@ const ProductDetails = () => {
     if (!cartItem) {
       setCart((prevState) => [
         ...prevState,
-        data.find((item) => (item.quantity = value)),
+        data.find((item) => (item.quantity = Number(value))),
       ]);
     } else {
       setCart(
         cart.map((item) =>
-          item.id === id ? { ...item, quantity: item.quantity + value } : item
+          item.id === id
+            ? { ...item, quantity: item.quantity + Number(value) }
+            : item
         )
       );
     }
@@ -55,12 +58,16 @@ const ProductDetails = () => {
                 <input
                   type="number"
                   id={data.id}
-                  onChange={(event) => setValue(Number(event.target.value))}
-                  min={1}
+                  onChange={(event) => setValue(event.target.value)}
                   value={value}
                 />
                 <div className="buttons-container">
-                  <button onClick={handleAddToCart} type="submit" id={data.id}>
+                  <button
+                    onClick={handleAddToCart}
+                    type="submit"
+                    id={data.id}
+                    disabled={!value.match(reg) ? true : false}
+                  >
                     ADD TO CART
                   </button>
                 </div>
@@ -120,6 +127,12 @@ const StyledProductSection = styled.section`
     border: 1px solid white;
     cursor: pointer;
   }
+
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
   input {
     max-width: 50px;
   }
