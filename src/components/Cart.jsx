@@ -2,12 +2,15 @@ import { useOutletContext } from "react-router-dom";
 import CartProducts from "./CartProducts";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { useMemo } from "react";
 
 const Cart = () => {
   const [cart, setCart] = useOutletContext();
-  const subtotal = cart.reduce((previousValue, currentValue) => {
-    return previousValue + currentValue.quantity * currentValue.price;
-  }, 0);
+  const subtotal = useMemo(() => {
+    return cart.reduce((previousValue, currentValue) => {
+      return previousValue + currentValue.quantity * currentValue.price;
+    }, 0);
+  });
 
   function handleClickIncrement(e) {
     const id = Number(e.target.id);
